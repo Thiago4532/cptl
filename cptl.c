@@ -339,9 +339,15 @@ int main(int argc, char* argv[]) {
     }
 
     char* args[] = {"xclip", "-i", "-selection", "clipboard", NULL};
-    execv("/usr/bin/xclip", args);
-    fprintf(stderr, "execv: %s\n", strerror(errno));
+    execvp("xclip", args);
+
+    int error_code = errno;
+
+    char* args_macOS[] = {"pbcopy", NULL};
+    execvp("pbcopy", args_macOS); // Mac OS compatibility
+
+    fprintf(stderr, "execv: %s\n", strerror(error_code));
     fprintf(stderr, "You are probably missing xclip!\n");
 
-    return errno;
+    return error_code;
 }
