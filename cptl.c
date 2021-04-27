@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <limits.h>
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
@@ -11,7 +12,7 @@
 
 #define MAX_INPUT_SIZE 255
 #define MAX_LIST_SIZE 255
-#define MAX_COMMAND_LENGTH 25
+#define MAX_COMMAND_LENGTH 32768
 
 typedef struct {
     char* name;
@@ -43,6 +44,18 @@ void strcpyl(char* dst, const char* src) {
     for (i = 0; src[i] != '\0'; i++)
         dst[i] = tolower(src[i]);
     dst[i] = src[i];
+}
+
+char* getcwd_pointer() {
+    int n = pathconf(".", _PC_PATH_MAX);
+    if (n == -1) return NULL;
+
+    char* buff = malloc(n * sizeof *buff);
+    if (getcwd(buff, n) != NULL)
+        return buff;
+
+    free(buff);
+    return NULL;
 }
 
 void add_element(char* token) {
@@ -95,6 +108,8 @@ void add_element(char* token) {
     if (path == NULL) {
         fprintf(stderr, "path: %s\n", strerror(errno));
         fprintf(stderr, "template: %s | %s\n", t_list[t_len].name, input);
+
+        free(path);
         exit(errno);
     }
 
@@ -103,18 +118,6 @@ void add_element(char* token) {
 
     free(path);
     t_len++;
-}
-
-char* getcwd_pointer() {
-    int n = pathconf(".", _PC_PATH_MAX);
-    if (n == -1) return NULL;
-
-    char* buff = malloc(n * sizeof *buff);
-    if (getcwd(buff, n) != NULL)
-        return buff;
-
-    free(buff);
-    return NULL;
 }
 
 FILE* parse_line(char* line) {
@@ -137,6 +140,7 @@ FILE* parse_line(char* line) {
             fprintf(stderr, "chdir: %s\n", strerror(errno));
             exit(errno);
         }
+
         FILE* file = fopen(".cptl", "r");
         if (file == NULL) {
             fprintf(stderr, "chdir: %s\n", strerror(errno));
@@ -166,6 +170,7 @@ FILE* parse_line(char* line) {
             exit(errno);
         }
 
+        printf("%ld\n", strlen(path));
         strcpy(preview_command, path);
     }else {
         fprintf(stderr, "bad input: %s\n", token);
@@ -262,7 +267,6 @@ int fzf_menu() {
         exit(errno);
     }
 
-
     fprintf(stderr, "Unknown error!\n");
     exit(EXIT_FAILURE);
 }
@@ -321,7 +325,7 @@ int main(int argc, char* argv[]) {
 
     if (t_id_len == 1) {
         printf("%s\n", t_list[t_id[id]].name);
-    } else if (access("/usr/bin/fzf", X_OK) == 0) id = fzf_menu();
+    } else if (access("/usr/bin/fz", X_OK) == 0) id = fzf_menu();
     else id = simple_menu();
 
     if (id < 0 || id >= t_id_len) {
