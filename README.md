@@ -1,5 +1,4 @@
-# cptl
-cptl - Competitive Programming Template Loader
+# cptl - Competitive Programming Template Loader
 
  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ut suscipit quam, vel dignissim neque. Mauris lacus felis, auctor ut nisi ac, consectetur porta quam. Praesent ex ligula, accumsan sit amet vulputate sed, tempus in lacus. Morbi ornare consectetur est. Nulla fermentum odio metus, a congue odio scelerisque finibus. Aenean consequat sollicitudin neque, sit amet laoreet libero. Suspendisse vel vehicula diam. Donec eleifend justo quis interdum laoreet.
 
