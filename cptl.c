@@ -48,7 +48,7 @@ void strcpyl(char* dst, const char* src) {
 
 char* getcwd_pointer() {
     int n = pathconf(".", _PC_PATH_MAX);
-    if (n == -1) return NULL;
+    if (n == -1) n = MAX_INPUT_SIZE;
 
     char* buff = malloc(n * sizeof *buff);
     if (getcwd(buff, n) != NULL)
