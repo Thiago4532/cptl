@@ -1,6 +1,6 @@
 # cptl - Competitive Programming Template Loader
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/OV-9vk0PplI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+https://user-images.githubusercontent.com/19158283/116191365-8e0e3100-a702-11eb-9b25-67e94eac634b.mp4
 
  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ut suscipit quam, vel dignissim neque. Mauris lacus felis, auctor ut nisi ac, consectetur porta quam. Praesent ex ligula, accumsan sit amet vulputate sed, tempus in lacus. Morbi ornare consectetur est. Nulla fermentum odio metus, a congue odio scelerisque finibus. Aenean consequat sollicitudin neque, sit amet laoreet libero. Suspendisse vel vehicula diam. Donec eleifend justo quis interdum laoreet.
 
