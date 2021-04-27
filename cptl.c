@@ -24,6 +24,8 @@ int t_id[MAX_LIST_SIZE];
 int t_len, t_id_len;
 char input[MAX_INPUT_SIZE];
 
+char preview_command[MAX_COMMAND_LENGTH] = "cat";
+
 char* getl() {
     int len = 0;
     for (int c = getchar(); c != '\n'; c = getchar()) {
@@ -53,7 +55,6 @@ void strcpyl(char* dst, const char* src) {
         dst[i] = tolower(src[i]);
     dst[i] = src[i];
 }
-
 
 void add_element(char* token) {
     if (token == NULL) {
@@ -161,13 +162,28 @@ FILE* parse_line(char* line) {
             exit(error);
         }
         return file;
-    } else {
+    } else if (strcmp(token, "preview_cmd") == 0) {
+        token = strtok(NULL, " \t");
+        
+        if (token == NULL) {
+            fprintf(stderr, "preview_cmd: Missing path!\n");
+            exit(ENOENT);
+        }
+
+        char* path = realpath(token, NULL);
+        if (path == NULL || access(path, X_OK) != 0) {
+            fprintf(stderr, "path: %s\n", strerror(errno));
+            fprintf(stderr, "token: %s\n", token);
+            exit(errno);
+        }
+
+        strcpy(preview_command, path);
+    }else {
         fprintf(stderr, "bad input: %s\n", token);
         exit(EPERM);
     }
     return NULL;
 }
-
 
 int check() {
     for (int i = 0; i < t_len; i++) {
@@ -200,11 +216,7 @@ int simple_menu() {
 }
 
 int fzf_menu() { 
-    char preview_command[MAX_COMMAND_LENGTH] = "cat";
     char fzf_height[] = "80%";
-
-    if (access("/usr/bin/pygmentize", X_OK) == 0)
-        strcpy(preview_command, "/usr/bin/pygmentize");
 
     int fd[2], fd_in[2];
 
