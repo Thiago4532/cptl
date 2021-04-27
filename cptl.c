@@ -245,7 +245,7 @@ int fzf_menu() {
         FILE* file = fdopen(fd[0], "r");
 
         int id;
-        if (fscanf(file, "%d||", &id) == EOF)
+        if (fscanf(file, "%d:", &id) == EOF)
             exit(1);
 
         fclose(file);
