@@ -170,7 +170,6 @@ FILE* parse_line(char* line) {
             exit(errno);
         }
 
-        printf("%ld\n", strlen(path));
         strcpy(preview_command, path);
     }else {
         fprintf(stderr, "bad input: %s\n", token);
