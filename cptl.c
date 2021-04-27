@@ -10,8 +10,8 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-#define MAX_INPUT_SIZE 255
-#define MAX_LIST_SIZE 255
+#define MAX_INPUT_SIZE 32768
+#define MAX_LIST_SIZE 32768
 #define MAX_COMMAND_LENGTH 32768
 
 typedef struct {
@@ -325,7 +325,7 @@ int main(int argc, char* argv[]) {
 
     if (t_id_len == 1) {
         printf("%s\n", t_list[t_id[id]].name);
-    } else if (access("/usr/bin/fz", X_OK) == 0) id = fzf_menu();
+    } else if (access("/usr/bin/fzf", X_OK) == 0) id = fzf_menu();
     else id = simple_menu();
 
     if (id < 0 || id >= t_id_len) {
