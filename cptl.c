@@ -26,17 +26,6 @@ char input[MAX_INPUT_SIZE];
 
 char preview_command[MAX_COMMAND_LENGTH] = "cat";
 
-char* getl() {
-    int len = 0;
-    for (int c = getchar(); c != '\n'; c = getchar()) {
-        if (c == EOF) return NULL;
-        input[len++] = c;
-    }
-
-    input[len++] = '\0';
-    return input;
-}
-
 char* fgetl(FILE* stream) {
     int len = 0;
     for (int c = getc(stream); c != '\n'; c = getc(stream)) {
